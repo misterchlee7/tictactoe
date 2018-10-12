@@ -1,6 +1,7 @@
 // install npm module prompt to receive user input
 const prompt = require('prompt');
 const matrix = []
+let isGameWon = false;
 
 prompt.start();
 
@@ -22,6 +23,7 @@ const winCheck = () => {
   const diagResult = diagCheck(matrix);
   if (rowResult || colResult || diagResult) {
     console.log('you win!');
+    isGameWon = true;
     return true;
   } else {
     return false;
@@ -67,15 +69,39 @@ const diagCheck = (matrix) => {
   }
 }
 
-// prompt.get(['x_coord', 'y_coord'], (err, result) => {
-//   if (err) {
-//     throw new Error('cannot do that');
-//   } else {
-//     console.log('whats your move');
-//     console.log(' x coord is: ', result.x_coord)
-//     console.log(' y coord is: ', result.y_coord)
-//     console.log(matrix);
-//   }
-// })
+// Game logic for player 1 and player 2
+const player1Turn = () => {
+  prompt.get(['p1_y_coord', 'p1_x_coord'], (err, result) => {
+    if (err) {
+      throw new Error('cannot do that');
+    } else {
+      console.log('p1_y_coord is: ', result.p1_y_coord);
+      console.log('p1_x_coord is: ', result.p1_x_coord);
+      matrix[result.p1_y_coord][result.p1_x_coord] = 'x';
+      console.log(matrix);
+      winCheck();
+      if (!isGameWon) {
+        player2Turn();
+      }
+    }
+  })
+};
 
-console.log(matrix)
+const player2Turn = () => {
+  prompt.get(['p2_y_coord', 'p2_x_coord'], (err, result) => {
+    if (err) {
+      throw new Error('cannot do that');
+    } else {
+      console.log('p2_y_coord is: ', result.p2_y_coord);
+      console.log('p2_x_coord is: ', result.p2_x_coord);
+      matrix[result.p2_y_coord][result.p2_x_coord] = 'o';
+      console.log(matrix);
+      winCheck();
+      if (!isGameWon) {
+        player1Turn();
+      }
+    }
+  })
+};
+
+player1Turn();
