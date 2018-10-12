@@ -16,6 +16,18 @@ const boardCreation = () => {
 }
 boardCreation();
 
+// console log of matrix board func
+const stringifyMatrix = (matrix) => {
+  const strMatrix = `
+  ${matrix[0][0]} | ${matrix[0][1]} | ${matrix[0][2]}
+  _________
+  ${matrix[1][0]} | ${matrix[1][1]} | ${matrix[1][2]}
+  _________
+  ${matrix[2][0]} | ${matrix[2][1]} | ${matrix[2][2]}
+  `;
+  console.log(strMatrix);
+}
+
 // Win condition checkers
 const winCheck = () => {
   const rowResult = rowCheck(matrix);
@@ -78,7 +90,7 @@ const player1Turn = () => {
       console.log('p1_y_coord is: ', result.p1_y_coord);
       console.log('p1_x_coord is: ', result.p1_x_coord);
       matrix[result.p1_y_coord][result.p1_x_coord] = 'x';
-      console.log(matrix);
+      stringifyMatrix(matrix);
       winCheck();
       if (!isGameWon) {
         player2Turn();
@@ -95,7 +107,7 @@ const player2Turn = () => {
       console.log('p2_y_coord is: ', result.p2_y_coord);
       console.log('p2_x_coord is: ', result.p2_x_coord);
       matrix[result.p2_y_coord][result.p2_x_coord] = 'o';
-      console.log(matrix);
+      stringifyMatrix(matrix);
       winCheck();
       if (!isGameWon) {
         player1Turn();
